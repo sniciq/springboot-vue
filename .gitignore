@@ -1,0 +1,15 @@
+logs/
+/target/
+SpringBoot-web/target/*
+SpringBoot-service/target/*
+SpringBoot-dao/target/*
+SpringBoot-common/target/*
+
+.classpath
+/bin/
+.idea/*
+.idea/
+SpringBoot-common.iml
+SpringBoot-dao.iml
+SpringBoot-service.iml
+SpringBoot-web.iml
