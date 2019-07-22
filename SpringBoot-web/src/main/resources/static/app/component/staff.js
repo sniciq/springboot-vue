@@ -36,7 +36,7 @@ define(function(){
                       <div class="row justify-content-end" style="padding-right:20px;">
                         <button type="button" class="btn btn-sm btn-outline-danger" v-on:click="onSearch();"><i class="fa fa-search"></i>查询</button>
                         <button type="button" class="btn btn-sm btn-outline-secondary" v-on:click="onClear();" style="margin-left:10px;"><i class="fa fa-trash-o"></i>清空</button>
-                        <b-button v-b-modal.modal-1 type="button" class="btn btn-sm btn-outline-success" style="margin-left:30px;"><i class="fa fa-plus"></i>新建</b-button>
+                        <button type="button" class="btn btn-sm btn-outline-success" style="margin-left:30px;" v-on:click="onAdd();"><i class="fa fa-plus"></i>新建</button>
                       </div>
                     </form>
                 </div>
@@ -54,7 +54,7 @@ define(function(){
                         </div>
                         <template slot="op" slot-scope="data">
                             <span class="operator" v-on:click="opEdit(data.item.id);" v-b-tooltip.hover title="编辑" ><i class="fa fa-pencil"></i></span>
-                            <span class="operator" v-on:click="opDelete(data.item.id);" v-b-tooltip.hover title="删除" ><i class="fa fa-trash"></i></span>
+                            <span class="operator" v-on:click="opDelete(data.item.id, data.item.name);" v-b-tooltip.hover title="删除" ><i class="fa fa-trash"></i></span>
                         </template>
                     </b-table>
                     <b-pagination v-model="pagination.pageNo" :total-rows="pagination.rows" :per-page="pagination.limit" @change="onPageChange" align="right" size="sm"></b-pagination>
@@ -88,12 +88,38 @@ define(function(){
                     this.$bvModal.show('modal-edit');
                 });
             },
+            opDelete: function(id, name) {
+                this.$bvModal.msgBoxConfirm('确认删除【' + name + '】？', {
+                    title: '确认',
+                    size: 'sm',
+                    buttonSize: 'sm',
+                    okVariant: 'danger',
+                    okTitle: 'YES',
+                    cancelTitle: 'NO',
+                    footerClass: 'p-2',
+                    hideHeaderClose: false,
+                    centered: true
+                }).then(value => {
+                    if(value === true) {
+                        axios.post('/staff/StaffCtrl/delete?id='+id).then((rsp) => {
+                            if(rsp.data.result == 'success') {
+                                this.onRefresh();
+                                this.$bvToast.toast('操作成功！', {title: '提示',variant: 'success',solid: true});
+                            }
+                            else {
+                                this.$bvToast.toast(rsp.data.info, {title: '提示',variant: 'danger',solid: true});
+                            }
+                        });
+                    }
+                });
+            },
             onEditOk: function(bvModalEvt) {
                 console.log(this.editForm);
                 let promise = axios.post('/staff/StaffCtrl/save', this.editForm);
                 promise.then((rsp) => {
                     this.editForm = {};
                     this.onSearch();
+                    this.$bvToast.toast('操作成功！', {title: '提示',variant: 'success',solid: true});
                 }).catch(error => {
                     bvModalEvt.preventDefault();
                 });
@@ -109,12 +135,19 @@ define(function(){
                     return [];
                 })
             },
+            onAdd: function() {
+                this.editForm = {};
+                this.$bvModal.show('modal-edit');
+            },
             onSearch: function () {
                 this.pagination.pageNo = 1;
                 this.$refs.dataTable.refresh()
             },
             onPageChange: function(page) {
                 this.onSearch();
+            },
+            onRefresh: function () {
+                this.$refs.dataTable.refresh()
             },
             onClear: function () {
                 this.formData = {};
