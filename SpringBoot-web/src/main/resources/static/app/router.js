@@ -5,8 +5,10 @@ define(function(require) {
     var Bar = { template: '<div>bar</div>' };
 
     var routes = [
-        { path: '/foo', component: Foo },
-        { path: '/bar', component: Bar },
+        { path: '/', component: Vue.component('home', function (resolve, reject) {
+                require(['/app/component/home.js'], resolve);
+            })
+        },
         {
             path: '/module/staff', component: Vue.component('staff', function (resolve, reject) {
                 require(['/app/component/staff.js'], resolve);
@@ -14,7 +16,12 @@ define(function(require) {
         }
     ];
 
-    return new VueRouter({
+    var router = new VueRouter({
         routes: routes
     });
+    router.afterEach((to, from) => {
+        this.$emit('afterRoute', to)
+    });
+
+    return router;
 });

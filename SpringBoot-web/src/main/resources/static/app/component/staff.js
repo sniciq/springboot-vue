@@ -11,6 +11,12 @@ define(function(){
                               <input type="text" class="form-control form-control-sm" v-model="editForm.name">
                             </div>
                          </div>
+                         <div class="row form-group">
+                            <label class="col-3 col-form-label col-form-label-sm text-right">birthday</label>
+                            <div class="col-9">
+                              <input type="date" class="form-control form-control-sm" v-model="editForm.birthday">
+                            </div>
+                         </div>
                     </form>
                     <template slot="modal-footer" slot-scope="{ ok, cancel }">
                         <b-button size="sm" variant="primary" @click="ok()">确认</b-button>

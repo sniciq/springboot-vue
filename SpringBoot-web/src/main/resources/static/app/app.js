@@ -1,6 +1,23 @@
 define(function(require){
     var Vue = require("vue");
-    var router = require('/app/router.js');
+    var VueRouter = require("vue-router");
+    var router = new VueRouter({
+        routes: [
+            { path: '/', component: Vue.component('home', function (resolve, reject) {
+                    require(['/app/component/home.js'], resolve);
+                })
+            },
+            {
+                path: '/module/staff', component: Vue.component('staff', function (resolve, reject) {
+                    require(['/app/component/staff.js'], resolve);
+                })
+            }
+        ]
+    });
+    router.afterEach((to, from) => {
+        appVM.onRouteChange(to);
+    });
+
     var axios = require("axios");
     var appVM = new Vue({
         el: '#appDiv',
@@ -28,7 +45,8 @@ define(function(require){
                 width: document.body.clientWidth,
                 height: document.body.clientHeight
             },
-            menus: []
+            menus: [],
+            sysRoute: {}
         },
         mounted: function() {
             var thiz = this;
@@ -46,8 +64,9 @@ define(function(require){
             loadUserInfo: function() {
                 axios.get('/sys/route').then((resp) => {
                     var menuRoutes = [];
-                    for(var i = 0; i < resp.data.length; i++) {
-                        var p = resp.data[i];
+                    this.sysRoute = resp.data;
+                    for(var i = 0; i < this.sysRoute.length; i++) {
+                        var p = this.sysRoute[i];
                         menuRoutes.push({
                             path: p.path,
                             name: p.ctrl,
@@ -85,9 +104,15 @@ define(function(require){
             toggleNavMin: function () {
                 this.isToggleNavMin = !this.isToggleNavMin;
             },
-            getNavName: function () {
+            onRouteChange: function (to) {
+                //FIXME 计算菜单路径
+                console.log(to);
+            }
+        },
+        computed: {
+            navPathName: function () {
                 return "aa";
             }
         }
     });
-})
+});

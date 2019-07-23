@@ -78,19 +78,18 @@
         <div role="main" class="col center-main container" v-bind:style="centerMainStyle">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    <li class="breadcrumb-item"><router-link :to="'/'"><i class="fa fa-home"></i>首页</router-link></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{navPathName}}</li>
                 </ol>
             </nav>
             <div>
                 <router-view></router-view>
-                <router-link :to="'/bar'">aaaaa</router-link>
+
             </div>
         </div>
     </div>
 </div>
 </div>
-
 <script src="/app/main.js"></script>
 </body>
 </html>
