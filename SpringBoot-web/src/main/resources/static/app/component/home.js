@@ -14,11 +14,9 @@ define(function(){
         `,
         data() {
             return {
-
             }
         },
         methods: {
-
         }
     }
 });

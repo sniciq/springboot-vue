@@ -76,13 +76,11 @@ define(function(require){
                             })
                         })
                     }
-                    console.log('menuRoutes', menuRoutes)
                     this.$router.addRoutes(menuRoutes);
                 });
 
                 axios.get('/sys/menus').then((resp) => {
                     this.menus = resp.data;
-                    console.log('menus', this.menus);
                 });
             },
             onWindowSizeChanged: function() {
@@ -96,8 +94,6 @@ define(function(require){
                 }
                 this.sideMenuStyle['height'] = (min_height - 84)+"px";
                 this.centerMainStyle['height'] = (min_height + 9)+"px";
-
-                console.log('height', this.sideMenuStyle['height'])
             },
             isLeftNavShow: function () {
                 return true;

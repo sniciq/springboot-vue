@@ -87,7 +87,6 @@ define(function(){
         },
         methods: {
             opEdit: function(id) {
-                console.log(id)
                 let promise = axios.get('/staff/StaffCtrl/getDetailInfo?id=' + id);
                 promise.then((rsp) => {
                     this.editForm = rsp.data.data;
@@ -114,7 +113,6 @@ define(function(){
                 });
             },
             onEditOk: function(bvModalEvt) {
-                console.log(this.editForm);
                 let promise = axios.post('/staff/StaffCtrl/save', this.editForm);
                 promise.then((rsp) => {
                     this.editForm = {};
