@@ -15,7 +15,7 @@ require.config({
         }
     }
 });
-require(['velocity','jquery', 'popper','bootstrap', 'axios'],function(){
+require(['popper','bootstrap', 'axios'],function(){
     require(['vue', 'bootstrap-vue', 'vue-router'], function (vue, bootstrapVue, VueRouter) {
         vue.use(bootstrapVue);
         vue.use(VueRouter);
