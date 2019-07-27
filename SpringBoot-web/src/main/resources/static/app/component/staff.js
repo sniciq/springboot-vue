@@ -96,15 +96,9 @@ define(function(){
             },
             opDelete: function(id, name) {
                 this.$bvModal.msgBoxConfirm('确认删除【' + name + '】？', {
-                    title: '确认',
-                    size: 'sm',
-                    buttonSize: 'sm',
-                    okVariant: 'danger',
-                    okTitle: 'YES',
-                    cancelTitle: 'NO',
-                    footerClass: 'p-2',
-                    hideHeaderClose: false,
-                    centered: true
+                    title: '确认', size: 'sm', buttonSize: 'sm', okVariant: 'danger',
+                    okTitle: '确认', cancelTitle: '取消',
+                    hideHeaderClose: false, centered: false
                 }).then(value => {
                     if(value === true) {
                         axios.post('/staff/StaffCtrl/delete?id='+id).then((rsp) => {

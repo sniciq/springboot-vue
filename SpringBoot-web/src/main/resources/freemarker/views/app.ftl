@@ -46,7 +46,7 @@
                 <a class="dropdown-item" href="#">其它</a>
             </div>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">退出</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" v-on:click="onLogout">退出</a></li>
     </ul>
 </nav>
 <div class="container-fluid">
@@ -79,7 +79,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><router-link :to="'/'"><i class="fa fa-home"></i>首页</router-link></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{navPathName}}</li>
+                    <li class="breadcrumb-item active" aria-current="page" v-if="navPathName != ''">{{navPathName}}</li>
                 </ol>
             </nav>
             <div>

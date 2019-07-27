@@ -178,6 +178,13 @@ body {
 .btn i {
     padding-right: 5px;
 }
+
+.b-toast .toast .toast-header {
+    padding: 0px 8px;
+}
+.b-toast .toast .toast-body {
+    padding: 0px 8px;
+}
 /* AC theme end */
 
 /*--------------------------------- menu start */

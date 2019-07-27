@@ -46,7 +46,8 @@ define(function(require){
                 height: document.body.clientHeight
             },
             menus: [],
-            sysRoute: {}
+            sysRoute: [],
+            navPathName: ''
         },
         mounted: function() {
             var thiz = this;
@@ -106,12 +107,25 @@ define(function(require){
             },
             onRouteChange: function (to) {
                 //FIXME 计算菜单路径
-                console.log(to);
-            }
-        },
-        computed: {
-            navPathName: function () {
-                return "aa";
+                var name = '';
+                for(var i = 0; i < this.sysRoute.length; i++) {
+                    if(this.sysRoute[i].path == to.path) {
+                        name = this.sysRoute[i].name;
+                        break;
+                    }
+                }
+                this.navPathName = name;
+            },
+            onLogout: function () {
+                this.$bvModal.msgBoxConfirm('退出登录？', {
+                    title: '确认', size: 'sm', buttonSize: 'sm', okVariant: 'danger',
+                    okTitle: '确认', cancelTitle: '取消',
+                    hideHeaderClose: false, centered: false
+                }).then(value => {
+                    if(value === true) {
+                        window.location.href = '/sys/logout';
+                    }
+                });
             }
         }
     });
